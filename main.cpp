@@ -12,7 +12,7 @@ void printMovieDetails(const QStringList &movie);
 void handleSearchByLetters(MovieSearcher &searcher, UserPreferences* userPreferences, MovieNotifier &notifier);
 void handleSearchByTags(MovieSearcher &searcher, UserPreferences* userPreferences, MovieNotifier &notifier);
 void handleViewLikes(UserPreferences* userPreferences, MovieSearcher &searcher,MovieNotifier &notifier);
-void handleViewWatchLater(UserPreferences* userPreferences);
+void handleViewWatchLater(UserPreferences* userPreferences, MovieSearcher &searcher);
 
 int main(int argc, char *argv[]) {
     QCoreApplication a(argc, argv);
@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
                 handleViewLikes(userPreferences, searcher, movieNotifier);
                 break;
             case 4:
-                handleViewWatchLater(userPreferences);
+                handleViewWatchLater(userPreferences,searcher);
                 break;
             case 5:
                 std::cout << "Saliendo...\n";
@@ -235,14 +235,87 @@ void handleViewLikes(UserPreferences* userPreferences, MovieSearcher &searcher, 
     }
 }
 
-void handleViewWatchLater(UserPreferences* userPreferences) {
+void handleViewWatchLater(UserPreferences* userPreferences, MovieSearcher &searcher) {
     auto watchLaterMovies = userPreferences->getWatchLater();
     if (watchLaterMovies.empty()) {
         std::cout << "No hay peliculas en 'Ver mas tarde'.\n";
     } else {
-        std::cout << "\nPeliculas en 'Ver mas tarde':\n";
-        for (size_t i = 0; i < watchLaterMovies.size(); ++i) {
-            std::cout << (i + 1) << ". " << watchLaterMovies[i].toStdString() << std::endl;
+        while (true) {
+            std::cout << "\nPeliculas en 'Ver mas tarde':\n";
+            for (size_t i = 0; i < watchLaterMovies.size(); ++i) {
+                std::cout << (i + 1) << ". " << watchLaterMovies[i].title.toStdString()
+                          << " (Prioridad: " << watchLaterMovies[i].priority
+                          << ", Fecha planeada: " << watchLaterMovies[i].plannedDate.toString("dd/MM/yyyy").toStdString() << ")\n";
+            }
+            std::cout << "\n1. Seleccionar pelicula\n";
+            std::cout << "2. Ordenar lista\n";
+            std::cout << "3. Volver al menu principal\n";
+            int choice;
+            std::cin >> choice;
+
+            if (choice == 1) {
+                std::cout << "Seleccione el numero de la pelicula: ";
+                int movieChoice;
+                std::cin >> movieChoice;
+                if (movieChoice > 0 && movieChoice <= static_cast<int>(watchLaterMovies.size())) {
+                    WatchLaterMovie& selectedMovie = watchLaterMovies[movieChoice - 1];
+                    while (true) {
+                        std::cout << "\nPelicula: " << selectedMovie.title.toStdString() << "\n";
+                        std::cout << "1. Ver detalles\n";
+                        std::cout << "2. Establecer prioridad\n";
+                        std::cout << "3. Agregar nota\n";
+                        std::cout << "4. Establecer fecha para ver\n";
+                        std::cout << "5. Marcar como vista\n";
+                        std::cout << "6. Volver a la lista\n";
+                        int action;
+                        std::cin >> action;
+                        if (action == 1) {
+                            printMovieDetails(searcher.getMovieDetails(selectedMovie.title));
+                        } else if (action == 2) {
+                            std::cout << "Ingrese la prioridad (1-5): ";
+                            int priority;
+                            std::cin >> priority;
+                            userPreferences->setPriority(selectedMovie.title, priority);
+                        } else if (action == 3) {
+                            std::cout << "Ingrese la nota: ";
+                            std::string note;
+                            std::cin.ignore();
+                            std::getline(std::cin, note);
+                            userPreferences->addNote(selectedMovie.title, QString::fromStdString(note));
+                        } else if (action == 4) {
+                            std::cout << "Ingrese la fecha (DD/MM/YYYY): ";
+                            std::string dateStr;
+                            std::cin >> dateStr;
+                            QDate date = QDate::fromString(QString::fromStdString(dateStr), "dd/MM/yyyy");
+                            userPreferences->setPlannedDate(selectedMovie.title, date);
+                        } else if (action == 5) {
+                            userPreferences->markAsViewed(selectedMovie.title);
+                            std::cout << "Pelicula marcada como vista y movida a 'Like'.\n";
+                            break;
+                        } else if (action == 6) {
+                            break;
+                        }
+                    }
+                }
+            } else if (choice == 2) {
+                std::cout << "Ordenar por:\n";
+                std::cout << "1. Titulo\n";
+                std::cout << "2. Prioridad\n";
+                std::cout << "3. Fecha planeada\n";
+                int sortChoice;
+                std::cin >> sortChoice;
+                if (sortChoice == 1) {
+                    userPreferences->sortWatchLater("title");
+                } else if (sortChoice == 2) {
+                    userPreferences->sortWatchLater("priority");
+                } else if (sortChoice == 3) {
+                    userPreferences->sortWatchLater("date");
+                }
+            } else if (choice == 3) {
+                break;
+            }
+            watchLaterMovies = userPreferences->getWatchLater();  // Actualizar la lista después de posibles cambios
         }
     }
 }
+
