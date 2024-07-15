@@ -121,9 +121,38 @@ Clase que actúa como observador de `MovieNotifier`. Notifica al usuario sobre c
   - Obtiene la lista de "Me gusta" de `UserPreferences`.
   - Muestra la lista de películas marcadas.
 
-- **`handleViewWatchLater(UserPreferences &preferences)`**: Muestra las películas que el usuario ha marcado para "Ver más tarde".
-  - Obtiene la lista de "Ver más tarde" de `UserPreferences`.
-  - Muestra la lista de películas marcadas.
+- **`handleViewWatchLater(UserPreferences &preferences)`**:  de manera interactiva. Aquí se detallan las funcionalidades y el flujo de la función:
+
+-Obtención de la Lista de "Ver más tarde":
+
+La función obtiene la lista de películas "Ver más tarde" desde el objeto UserPreferences.
+Si la lista está vacía, muestra un mensaje indicando que no hay películas en "Ver más tarde".
+Visualización de la Lista de Películas:
+
+-Muestra todas las películas en la lista junto con su prioridad y la fecha planeada para verlas.
+Presenta un menú con las siguientes opciones:
+Seleccionar una película para ver más detalles o realizar acciones.
+Ordenar la lista de películas por título, prioridad o fecha planeada.
+Volver al menú principal.
+Selección de una Película:
+
+-Permite al usuario seleccionar una película de la lista introduciendo su número correspondiente.
+Presenta un submenú con opciones para la película seleccionada:
+Ver detalles: Muestra los detalles de la película utilizando el objeto MovieSearcher.
+Establecer prioridad: Permite al usuario establecer la prioridad de la película.
+Agregar nota: Permite al usuario agregar una nota a la película.
+Establecer fecha para ver: Permite al usuario establecer una fecha para ver la película.
+Marcar como vista: Marca la película como vista y la mueve a la lista de "Like".
+Volver a la lista: Retorna al menú principal de la lista de películas.
+Ordenar la Lista de Películas:
+
+-Permite al usuario ordenar la lista de películas por:
+Título.
+Prioridad.
+Fecha planeada.
+Actualización de la Lista:
+
+-Después de cualquier interacción que modifique la lista, esta se actualiza para reflejar los cambios realizados por el usuario.
 
 ### Patrones de Diseño
 
