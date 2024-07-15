@@ -139,11 +139,17 @@ Clase que actúa como observador de `MovieNotifier`. Notifica al usuario sobre c
   - Permite al usuario seleccionar una película de la lista introduciendo su número correspondiente.
     Presenta un submenú con opciones para la película seleccionada:
     Ver detalles: Muestra los detalles de la película utilizando el objeto MovieSearcher.
+    
     Establecer prioridad: Permite al usuario establecer la prioridad de la película.
+    
     Agregar nota: Permite al usuario agregar una nota a la película.
+    
     Establecer fecha para ver: Permite al usuario establecer una fecha para ver la película.
+    
     Marcar como vista: Marca la película como vista y la mueve a la lista de "Like".
+    
     Volver a la lista: Retorna al menú principal de la lista de películas.
+    
     Ordenar la Lista de Películas:
 
   - Permite al usuario ordenar la lista de películas por:
