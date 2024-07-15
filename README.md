@@ -131,7 +131,6 @@ El proyecto utiliza varios patrones de diseño de software para mejorar la estru
 
 1. **Singleton**: Implementado en `UserPreferences` para asegurar una única instancia de preferencias del usuario en toda la aplicación.
 2. **Observador**: Implementado en `MovieNotifier` y `UserNotifier` para notificar a los observadores sobre cambios en el estado de las películas seleccionadas por el usuario.
-3. **Estrategia**: Utilizado en `MovieSearcher` para proporcionar diferentes métodos de búsqueda de películas (por letras y por tags).
 
 
 
