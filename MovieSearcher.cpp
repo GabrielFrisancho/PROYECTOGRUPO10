@@ -7,30 +7,45 @@ MovieSearcher::MovieSearcher(const QString &filePath) : filePath(filePath) {
     readCSVFile();
 }
 
-std::vector<QStringList> MovieSearcher::searchMovieByLetters(const QString &letters) {
+std::vector<QStringList> MovieSearcher::searchMovieByLetters(const QString &letters, int startIndex) {
     std::lock_guard<std::mutex> lock(mutex);
     std::vector<QStringList> foundMovies;
+    int endIndex = startIndex + 5;
+    int currentIndex = 0;
 
     for (auto it = movieData.begin(); it != movieData.end(); ++it) {
         QString title = it->first;
         if (title.contains(letters, Qt::CaseInsensitive)) {
-            foundMovies.push_back(it->second);
+            if (currentIndex >= startIndex && currentIndex < endIndex) {
+                foundMovies.push_back(it->second);
+            }
+            currentIndex++;
+            if (foundMovies.size() == 5) {
+                break;
+            }
         }
     }
 
     return foundMovies;
 }
 
-std::vector<QStringList> MovieSearcher::searchMovieByTags(const QString &tags) {
+std::vector<QStringList> MovieSearcher::searchMovieByTags(const QString &tags, int startIndex) {
     std::lock_guard<std::mutex> lock(mutex);
     std::vector<QStringList> foundMovies;
+    int endIndex = startIndex + 5;
+    int currentIndex = 0;
 
     for (auto it = movieData.begin(); it != movieData.end(); ++it) {
         QStringList movieTags = it->second[3].split(';');
         for (const QString &tag : movieTags) {
             if (tag.trimmed().compare(tags, Qt::CaseInsensitive) == 0) {
-                foundMovies.push_back(it->second);
-                break;
+                if (currentIndex >= startIndex && currentIndex < endIndex) {
+                    foundMovies.push_back(it->second);
+                }
+                currentIndex++;
+                if (foundMovies.size() == 5) {
+                    break;
+                }
             }
         }
     }
