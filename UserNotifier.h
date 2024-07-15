@@ -1,4 +1,3 @@
-// UserNotifier.h
 #ifndef USERNOTIFIER_H
 #define USERNOTIFIER_H
 
