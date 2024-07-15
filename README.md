@@ -47,8 +47,8 @@ El proyecto está organizado de la siguiente manera:
 
 ## USO
 * Al ejecutar la aplicación, se te pedirá que ingreses tu nombre de usuario. Después, se mostrará un menú con las siguientes opciones:
-- Buscar películas por letras: Permite buscar películas cuyo título contenga un conjunto de letras especificadas.
-- Buscar películas por tags: Permite buscar películas por tags (géneros).
-- Ver películas marcadas como "Me gusta": Muestra las películas que has marcado como "Me gusta".
-- Ver películas marcadas para "Ver más tarde": Muestra las películas que has marcado para ver más tarde.
-- Salir: Termina la aplicación.
+1. Buscar películas por letras: Permite buscar películas cuyo título contenga un conjunto de letras especificadas.
+2. Buscar películas por tags: Permite buscar películas por tags (géneros).
+3. Ver películas marcadas como "Me gusta": Muestra las películas que has marcado como "Me gusta".
+4. Ver películas marcadas para "Ver más tarde": Muestra las películas que has marcado para ver más tarde.
+5. Salir: Termina la aplicación.
