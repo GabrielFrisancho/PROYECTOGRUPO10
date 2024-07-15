@@ -132,6 +132,13 @@ El proyecto utiliza varios patrones de diseño de software para mejorar la estru
 1. **Singleton**: Implementado en `UserPreferences` para asegurar una única instancia de preferencias del usuario en toda la aplicación.
 2. **Observador**: Implementado en `MovieNotifier` y `UserNotifier` para notificar a los observadores sobre cambios en el estado de las películas seleccionadas por el usuario.
 
+### Algoritmos
 
+- **Eficiencia de Tiempo y Espacio**: Se han considerado criterios de eficiencia en el uso de algoritmos, optimizando tanto tiempo como espacio.
+- **Algoritmos de la Librería Estándar**: Uso intensivo de algoritmos existentes de la librería estándar de C++ para operaciones comunes.
+- **Algoritmos Creativos**: Implementación de algoritmos creativos y eficientes, como búsquedas optimizadas, que manejan grandes volúmenes de información con complejidades mayores a lineales (nlog).
+
+#### Ejemplo de Algoritmo de Complejidad Mayor a Lineal
+En la clase `MovieSearcher`, se utiliza un algoritmo de búsqueda binaria para encontrar películas, cuya complejidad es **O(log n)**, mayor a la complejidad lineal.
 
 
