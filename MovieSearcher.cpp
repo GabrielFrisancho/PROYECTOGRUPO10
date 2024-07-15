@@ -114,4 +114,3 @@ QString MovieSearcher::getFirstTag(const QString &title) const {
     }
     return QString();
 }
-
