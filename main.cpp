@@ -21,12 +21,16 @@ int main(int argc, char *argv[]) {
     MovieSearcher searcher(filePath);
     UserPreferences* userPreferences = UserPreferences::getInstance();
 
-    MovieNotifier movieNotifier;
-    UserNotifier user1("Alice");
-    UserNotifier user2("Bob");
+    // Solicitar el nombre del usuario
+    std::cout << "Por favor, ingrese su nombre: ";
+    std::string username;
+    std::getline(std::cin, username);
 
-    movieNotifier.addObserver(&user1);
-    movieNotifier.addObserver(&user2);
+    MovieNotifier movieNotifier;
+    UserNotifier userNotifier(QString::fromStdString(username));
+
+    movieNotifier.addObserver(&userNotifier);
+
 
     int opcion;
     do {
