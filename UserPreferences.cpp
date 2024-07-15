@@ -28,3 +28,4 @@ std::vector<QString> UserPreferences::getWatchLater() const {
     std::lock_guard<std::mutex> lock(mutex);
     return watchLater;
 }
+
