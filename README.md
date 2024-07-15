@@ -11,5 +11,5 @@
 -Gabriel Frisancho Gálvez
 
 ## Plataforma de Streaming
-* El programa lee la base de datos en forma **.csv**. La base de datos puede ser descargada desde el siguiente [link](https://drive.google.com/file/d/1EwILGKEVmbmWsGaDXd0gj9F6sE48oxh5/view?usp=sharing).
+* El programa lee la base de datos en forma **.csv**. La base de datos actualizada y limpia , con el proposito de que nuestro programa pueda leer la data sin problemas , puede ser descargada desde el siguiente [link](https://drive.google.com/file/d/1EwILGKEVmbmWsGaDXd0gj9F6sE48oxh5/view?usp=sharing).
 
