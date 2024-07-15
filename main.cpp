@@ -3,12 +3,14 @@
 #include <iostream>
 #include "MovieSearcher.h"
 #include "UserPreferences.h"
+#include "MovieNotifier.h"
+#include "UserNotifier.h"
 
 void printMenu();
 void printMovies(const std::vector<QStringList> &movies, int startIndex);
 void printMovieDetails(const QStringList &movie);
-void handleSearchByLetters(MovieSearcher &searcher, UserPreferences* userPreferences);
-void handleSearchByTags(MovieSearcher &searcher, UserPreferences* userPreferences);
+void handleSearchByLetters(MovieSearcher &searcher, UserPreferences* userPreferences, MovieNotifier &notifier);
+void handleSearchByTags(MovieSearcher &searcher, UserPreferences* userPreferences, MovieNotifier &notifier);
 void handleViewLikes(UserPreferences* userPreferences, MovieSearcher &searcher);
 void handleViewWatchLater(UserPreferences* userPreferences);
 
@@ -19,6 +21,13 @@ int main(int argc, char *argv[]) {
     MovieSearcher searcher(filePath);
     UserPreferences* userPreferences = UserPreferences::getInstance();
 
+    MovieNotifier movieNotifier;
+    UserNotifier user1("Alice");
+    UserNotifier user2("Bob");
+
+    movieNotifier.addObserver(&user1);
+    movieNotifier.addObserver(&user2);
+
     int opcion;
     do {
         printMenu();
@@ -26,10 +35,10 @@ int main(int argc, char *argv[]) {
 
         switch (opcion) {
             case 1:
-                handleSearchByLetters(searcher, userPreferences);
+                handleSearchByLetters(searcher, userPreferences, movieNotifier);
                 break;
             case 2:
-                handleSearchByTags(searcher, userPreferences);
+                handleSearchByTags(searcher, userPreferences, movieNotifier);
                 break;
             case 3:
                 handleViewLikes(userPreferences, searcher);
@@ -76,7 +85,7 @@ void printMovieDetails(const QStringList &movie) {
     std::cout << "Synopsis Source: " << movie[5].toStdString() << std::endl;
 }
 
-void handleSearchByLetters(MovieSearcher &searcher, UserPreferences* userPreferences) {
+void handleSearchByLetters(MovieSearcher &searcher, UserPreferences* userPreferences, MovieNotifier &notifier) {
     std::string keyword;
     std::cout << "Introduzca letras para buscar peliculas: ";
     std::cin >> keyword;
@@ -102,14 +111,16 @@ void handleSearchByLetters(MovieSearcher &searcher, UserPreferences* userPrefere
             std::cin >> action;
             if (action == 1) {
                 userPreferences->addLike(foundMovies[selectedIndex - 1][1]);
+                notifier.notifyObservers(foundMovies[selectedIndex - 1][1]);
             } else if (action == 2) {
                 userPreferences->addWatchLater(foundMovies[selectedIndex - 1][1]);
+                notifier.notifyObservers(foundMovies[selectedIndex - 1][1]);
             }
         }
     }
 }
 
-void handleSearchByTags(MovieSearcher &searcher, UserPreferences* userPreferences) {
+void handleSearchByTags(MovieSearcher &searcher, UserPreferences* userPreferences, MovieNotifier &notifier) {
     std::string keyword;
     std::cout << "Introduzca tags para buscar: ";
     std::cin >> keyword;
@@ -135,8 +146,10 @@ void handleSearchByTags(MovieSearcher &searcher, UserPreferences* userPreference
             std::cin >> action;
             if (action == 1) {
                 userPreferences->addLike(foundMovies[selectedIndex - 1][1]);
+                notifier.notifyObservers(foundMovies[selectedIndex - 1][1]);
             } else if (action == 2) {
                 userPreferences->addWatchLater(foundMovies[selectedIndex - 1][1]);
+                notifier.notifyObservers(foundMovies[selectedIndex - 1][1]);
             }
         }
     }
