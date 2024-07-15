@@ -121,7 +121,7 @@ Clase que actúa como observador de `MovieNotifier`. Notifica al usuario sobre c
   - Obtiene la lista de "Me gusta" de `UserPreferences`.
   - Muestra la lista de películas marcadas.
 
-- **`handleViewWatchLater(UserPreferences &preferences)`**:  de manera interactiva. Aquí se detallan las funcionalidades y el flujo de la función:
+- **`handleViewWatchLater(UserPreferences &preferences)`**:  de manera interactiva permite a los usuarios interactuar con su lista de películas "Ver más tarde". Aquí se detallan las funcionalidades y el flujo de la función:
 
   - Obtención de la Lista de "Ver más tarde":
 
