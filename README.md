@@ -142,4 +142,5 @@ El proyecto utiliza varios patrones de diseño de software para mejorar la estru
 En la clase `MovieSearcher`, se utiliza un algoritmo de búsqueda binaria para encontrar películas, cuya complejidad es **O(log n)**, mayor a la complejidad lineal.
 
 ### QT (F.zip)
-Archivos .qml.ui
+Archivos .qml.ui incluyen los codigos utilizados para hacer la interfaz grafica del programa, hechos en qt studio design y qt creator. En el utilizaremos qml que es qt meta language el cual nos ayudara mucho a la hora de manejar objetos.
+Para ingresar a los archivos qml.ui desde el zip F.zip >> Proyect3_DS >> Proyect3_DSContent. Alli encontrara hasta 10 archivos qml.ui los cuales hemos trabajado y decorado para hacer una interfaz amigable y bastante sencilla, la cual se basa principalmente de botones para la conexion de stages.
