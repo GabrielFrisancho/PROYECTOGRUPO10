@@ -1,5 +1,13 @@
 #include "UserPreferences.h"
-#include <set>
+
+UserPreferences* UserPreferences::instance = nullptr;
+
+UserPreferences* UserPreferences::getInstance() {
+    if (instance == nullptr) {
+        instance = new UserPreferences();
+    }
+    return instance;
+}
 
 void UserPreferences::addLike(const QString &title) {
     likes.insert(title);
