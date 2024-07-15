@@ -123,20 +123,20 @@ Clase que actúa como observador de `MovieNotifier`. Notifica al usuario sobre c
 
 - **`handleViewWatchLater(UserPreferences &preferences)`**:  de manera interactiva. Aquí se detallan las funcionalidades y el flujo de la función:
 
-  -Obtención de la Lista de "Ver más tarde":
+  - Obtención de la Lista de "Ver más tarde":
 
     La función obtiene la lista de películas "Ver más tarde" desde el objeto UserPreferences.
     Si la lista está vacía, muestra un mensaje indicando que no hay películas en "Ver más tarde".
     Visualización de la Lista de Películas:
 
-  -Muestra todas las películas en la lista junto con su prioridad y la fecha planeada para verlas.
+  - Muestra todas las películas en la lista junto con su prioridad y la fecha planeada para verlas.
     Presenta un menú con las siguientes opciones:
     Seleccionar una película para ver más detalles o realizar acciones.
     Ordenar la lista de películas por título, prioridad o fecha planeada.
     Volver al menú principal.
     Selección de una Película:
 
-  -Permite al usuario seleccionar una película de la lista introduciendo su número correspondiente.
+  - Permite al usuario seleccionar una película de la lista introduciendo su número correspondiente.
     Presenta un submenú con opciones para la película seleccionada:
     Ver detalles: Muestra los detalles de la película utilizando el objeto MovieSearcher.
     Establecer prioridad: Permite al usuario establecer la prioridad de la película.
@@ -146,13 +146,13 @@ Clase que actúa como observador de `MovieNotifier`. Notifica al usuario sobre c
     Volver a la lista: Retorna al menú principal de la lista de películas.
     Ordenar la Lista de Películas:
 
-  -Permite al usuario ordenar la lista de películas por:
+  - Permite al usuario ordenar la lista de películas por:
     Título.
     Prioridad.
     Fecha planeada.
     Actualización de la Lista:
 
-  -Después de cualquier interacción que modifique la lista, esta se actualiza para reflejar los cambios realizados por el usuario.
+  - Después de cualquier interacción que modifique la lista, esta se actualiza para reflejar los cambios realizados por el usuario.
 
 ### Patrones de Diseño
 
