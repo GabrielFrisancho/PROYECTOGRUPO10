@@ -9,18 +9,22 @@ UserPreferences* UserPreferences::getInstance() {
     return instance;
 }
 
-void UserPreferences::addLike(const QString &title) {
-    likes.insert(title);
+void UserPreferences::addLike(const QString &movieTitle) {
+    std::lock_guard<std::mutex> lock(mutex);
+    likes.push_back(movieTitle);
 }
 
-void UserPreferences::addWatchLater(const QString &title) {
-    watchLater.insert(title);
+void UserPreferences::addWatchLater(const QString &movieTitle) {
+    std::lock_guard<std::mutex> lock(mutex);
+    watchLater.push_back(movieTitle);
 }
 
-std::set<QString> UserPreferences::getLikes() const {
+std::vector<QString> UserPreferences::getLikes() const {
+    std::lock_guard<std::mutex> lock(mutex);
     return likes;
 }
 
-std::set<QString> UserPreferences::getWatchLater() const {
+std::vector<QString> UserPreferences::getWatchLater() const {
+    std::lock_guard<std::mutex> lock(mutex);
     return watchLater;
 }
