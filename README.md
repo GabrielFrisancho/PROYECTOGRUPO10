@@ -17,7 +17,7 @@ PELIS++ es una aplicación en C++ utilizando la biblioteca Qt para gestionar y b
 ## Descripción del Proyecto
 
 * El programa lee la base de datos en forma **.csv**. La base de datos actualizada y limpia , con el proposito de que nuestro programa pueda leer la data sin problemas , puede ser descargada desde el siguiente [link](https://drive.google.com/file/d/1EwILGKEVmbmWsGaDXd0gj9F6sE48oxh5/view?usp=sharing).
-* 
+
 ## Características
 
 - **Búsqueda de películas por letras**
