@@ -3,6 +3,7 @@
 #include <iostream>
 #include "MovieSearcher.h"
 #include "UserPreferences.h"
+#include "MovieDecorator.h"
 
 void printMenu() {
     std::cout << "\n--- MENU ---\n";
@@ -17,7 +18,7 @@ void printMenu() {
 void printMovies(const std::vector<QStringList> &movies, int startIndex) {
     std::cout << "\n--- Películas encontradas ---\n";
     for (size_t i = 0; i < movies.size(); ++i) {
-        std::cout << startIndex + i + 1 << ". " << movies[i][1].toStdString() << std::endl;
+        std::cout << (startIndex + i + 1) << ". " << movies[i][1].toStdString() << std::endl;
     }
 }
 
@@ -41,7 +42,6 @@ int main(int argc, char *argv[]) {
     int opcion;
     std::string keyword;
     std::vector<QStringList> foundMovies;
-    int startIndex = 0;
 
     do {
         printMenu();
@@ -49,20 +49,20 @@ int main(int argc, char *argv[]) {
 
         switch (opcion) {
             case 1:
-                std::cout << "Introduzca letras para buscar: ";
+                std::cout << "Introduzca letras para buscar películas: ";
                 std::cin >> keyword;
-                startIndex = 0;
-                foundMovies = searcher.searchMovieByLetters(QString::fromStdString(keyword), startIndex);
+                foundMovies = searcher.searchMovieByLetters(QString::fromStdString(keyword), 0);
                 while (!foundMovies.empty()) {
-                    printMovies(foundMovies, startIndex);
+                    printMovies(foundMovies, 0);
                     std::cout << "\nSeleccione una película por su número, ingrese 0 para ver más resultados, o -1 para volver al menú: ";
                     int selectedIndex;
                     std::cin >> selectedIndex;
                     if (selectedIndex == -1) {
                         break;
                     } else if (selectedIndex == 0) {
-                        startIndex += 5;
+                        static int startIndex = 5;
                         foundMovies = searcher.searchMovieByLetters(QString::fromStdString(keyword), startIndex);
+                        startIndex += 5;
                     } else if (selectedIndex > 0 && selectedIndex <= static_cast<int>(foundMovies.size())) {
                         printMovieDetails(foundMovies[selectedIndex - 1]);
                         std::cout << "1. Añadir a 'Like'\n";
@@ -82,18 +82,18 @@ int main(int argc, char *argv[]) {
             case 2:
                 std::cout << "Introduzca tags para buscar: ";
                 std::cin >> keyword;
-                startIndex = 0;
-                foundMovies = searcher.searchMovieByTags(QString::fromStdString(keyword), startIndex);
+                foundMovies = searcher.searchMovieByTags(QString::fromStdString(keyword), 0);
                 while (!foundMovies.empty()) {
-                    printMovies(foundMovies, startIndex);
+                    printMovies(foundMovies, 0);
                     std::cout << "\nSeleccione una película por su número, ingrese 0 para ver más resultados, o -1 para volver al menú: ";
                     int selectedIndex;
                     std::cin >> selectedIndex;
                     if (selectedIndex == -1) {
                         break;
                     } else if (selectedIndex == 0) {
-                        startIndex += 5;
+                        static int startIndex = 5;
                         foundMovies = searcher.searchMovieByTags(QString::fromStdString(keyword), startIndex);
+                        startIndex += 5;
                     } else if (selectedIndex > 0 && selectedIndex <= static_cast<int>(foundMovies.size())) {
                         printMovieDetails(foundMovies[selectedIndex - 1]);
                         std::cout << "1. Añadir a 'Like'\n";
@@ -110,26 +110,70 @@ int main(int argc, char *argv[]) {
                 }
                 break;
 
-            case 3:
-                std::cout << "\nPelículas 'Like':\n";
-                for (const QString &title : userPreferences->getLikes()) {
-                    std::cout << title.toStdString() << std::endl;
+            case 3: {
+                auto likedMovies = userPreferences->getLikes();
+                if (likedMovies.empty()) {
+                    std::cout << "No hay películas en 'Like'.\n";
+                } else {
+                    std::cout << "\nPelículas en 'Like':\n";
+                    for (size_t i = 0; i < likedMovies.size(); ++i) {
+                        std::cout << (i + 1) << ". " << likedMovies[i].toStdString() << std::endl;
+                    }
+                    std::cout << "Seleccione una película para ver más detalles o buscar similares por tags: ";
+                    int selectedLike;
+                    std::cin >> selectedLike;
+                    if (selectedLike > 0 && selectedLike <= static_cast<int>(likedMovies.size())) {
+                        QString selectedMovie = likedMovies[selectedLike - 1];
+                        std::cout << "\nSeleccionó: " << selectedMovie.toStdString() << std::endl;
+                        std::cout << "1. Ver información de la película\n";
+                        std::cout << "2. Ver películas similares por tag\n";
+                        int likeAction;
+                        std::cin >> likeAction;
+                        if (likeAction == 1) {
+                            printMovieDetails(searcher.getMovieDetails(selectedMovie));
+                        } else if (likeAction == 2) {
+                            QString tag = searcher.getFirstTag(selectedMovie);
+                            foundMovies = searcher.searchMovieByTags(tag, 0);
+                            while (!foundMovies.empty()) {
+                                printMovies(foundMovies, 0);
+                                std::cout << "\nSeleccione una película por su número, ingrese 0 para ver más resultados, o -1 para volver al menú: ";
+                                int selectedIndex;
+                                std::cin >> selectedIndex;
+                                if (selectedIndex == -1) {
+                                    break;
+                                } else if (selectedIndex == 0) {
+                                    static int startIndex = 5;
+                                    foundMovies = searcher.searchMovieByTags(tag, startIndex);
+                                    startIndex += 5;
+                                } else if (selectedIndex > 0 && selectedIndex <= static_cast<int>(foundMovies.size())) {
+                                    printMovieDetails(foundMovies[selectedIndex - 1]);
+                                }
+                            }
+                        }
+                    }
                 }
                 break;
+            }
 
-            case 4:
-                std::cout << "\nPelículas 'Ver más tarde':\n";
-                for (const QString &title : userPreferences->getWatchLater()) {
-                    std::cout << title.toStdString() << std::endl;
+            case 4: {
+                auto watchLaterMovies = userPreferences->getWatchLater();
+                if (watchLaterMovies.empty()) {
+                    std::cout << "No hay películas en 'Ver más tarde'.\n";
+                } else {
+                    std::cout << "\nPelículas en 'Ver más tarde':\n";
+                    for (size_t i = 0; i < watchLaterMovies.size(); ++i) {
+                        std::cout << (i + 1) << ". " << watchLaterMovies[i].toStdString() << std::endl;
+                    }
                 }
                 break;
+            }
 
             case 5:
                 std::cout << "Saliendo...\n";
                 break;
 
             default:
-                std::cout << "Opción no válida. Intente de nuevo.\n";
+                std::cout << "Opción inválida. Intente de nuevo.\n";
                 break;
         }
 
