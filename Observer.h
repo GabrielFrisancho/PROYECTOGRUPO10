@@ -1,4 +1,3 @@
-// Observer.h
 #ifndef OBSERVER_H
 #define OBSERVER_H
 
@@ -11,4 +10,3 @@ public:
 };
 
 #endif // OBSERVER_H
-
