@@ -1,9 +1,13 @@
 # Programación III: Proyecto Final (2024-1)
 
 ## Integrantes
+
 -Mikael Quinto Ramos
+
 -Adrian Urbina Mendoza
+
 -Camila Espinoza Cabrera
+
 -Gabriel Frisancho Gálvez
 
 El siguiente texto debe ser eliminar en su repositorio.
