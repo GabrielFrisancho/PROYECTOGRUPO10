@@ -1,24 +1,24 @@
-#ifndef UNTITLED19_USERPREFERENCES_H
-#define UNTITLED19_USERPREFERENCES_H
+#ifndef USERPREFERENCES_H
+#define USERPREFERENCES_H
 
-#include <QString>
 #include <vector>
-#include <set>
+#include <QString>
+#include <mutex>
 
 class UserPreferences {
 public:
     static UserPreferences* getInstance();
-    void addLike(const QString &title);
-    void addWatchLater(const QString &title);
-    std::set<QString> getLikes() const;
-    std::set<QString> getWatchLater() const;
+    void addLike(const QString &movieTitle);
+    void addWatchLater(const QString &movieTitle);
+    std::vector<QString> getLikes() const;
+    std::vector<QString> getWatchLater() const;
 
 private:
-    UserPreferences() = default; // Constructor privado
+    UserPreferences() = default;
     static UserPreferences* instance;
-    std::set<QString> likes;
-    std::set<QString> watchLater;
+    std::vector<QString> likes;
+    std::vector<QString> watchLater;
+    mutable std::mutex mutex;
 };
 
-#endif //UNTITLED19_USERPREFERENCES_H
-
+#endif // USERPREFERENCES_H
