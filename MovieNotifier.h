@@ -26,4 +26,3 @@ public:
 };
 
 #endif // MOVIENOTIFIER_H
-
