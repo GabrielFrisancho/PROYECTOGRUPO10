@@ -3,6 +3,7 @@
 
 #include "Observer.h"
 #include <iostream>
+#include <QString>
 
 class UserNotifier : public Observer {
 private:
@@ -14,6 +15,10 @@ public:
     void update(const QString& movieTitle) override {
         std::cout << "Hey " << username.toStdString() << "! A new movie matching your preferences has been added: "
                   << movieTitle.toStdString() << std::endl;
+    }
+
+    void setUsername(const QString& name) {
+        username = name;
     }
 };
 
