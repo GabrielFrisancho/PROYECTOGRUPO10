@@ -9,91 +9,103 @@ int main(int argc, char *argv[]) {
 
     QString filePath = "mpst_fulldatadr_clean.csv";
     MovieSearcher searcher(filePath);
-    UserPreferences userPreferences;
+    UserPreferences* userPreferences = UserPreferences::getInstance();
 
     int opcion;
-    QString keyword;
+    std::string keyword;
     std::vector<QStringList> foundMovies;
 
-    QTextStream qin(stdin);
-    QTextStream qout(stdout);
-
     do {
-        qout << "\n--- MENU ---\n";
-        qout << "1. Buscar película por letras\n";
-        qout << "2. Buscar película por tags (géneros)\n";
-        qout << "3. Ver películas 'Like'\n";
-        qout << "4. Ver películas 'Ver más tarde'\n";
-        qout << "5. Salir\n";
-        qout << "Seleccione una opción: " << Qt::flush;
-        qin >> opcion;
+        std::cout << "\n--- MENU ---\n";
+        std::cout << "1. Buscar película por letras\n";
+        std::cout << "2. Buscar película por tags (géneros)\n";
+        std::cout << "3. Ver películas 'Like'\n";
+        std::cout << "4. Ver películas 'Ver más tarde'\n";
+        std::cout << "5. Salir\n";
+        std::cout << "Seleccione una opción: ";
+        std::cin >> opcion;
 
         switch (opcion) {
             case 1:
-                qout << "Introduzca letras para buscar películas: " << Qt::flush;
-                qin >> keyword;
-                foundMovies = searcher.searchMovieByLetters(keyword);
+                std::cout << "Introduzca letras para buscar películas: ";
+                std::cin >> keyword;
+                foundMovies = searcher.searchMovieByLetters(QString::fromStdString(keyword));
                 break;
             case 2:
-                qout << "Introduzca un tag para buscar películas: " << Qt::flush;
-                qin >> keyword;
-                foundMovies = searcher.searchMovieByTags(keyword);
+                std::cout << "Introduzca un tag para buscar películas: ";
+                std::cin >> keyword;
+                foundMovies = searcher.searchMovieByTags(QString::fromStdString(keyword));
                 break;
-            case 3:
-                qout << "\n--- Películas 'Like' ---\n";
-                for (const QString &title : userPreferences.getLikes()) {
-                    qout << title << Qt::endl;
+            case 3: {
+                std::set<QString> likes = userPreferences->getLikes();
+                std::cout << "\n--- Películas 'Like' ---\n";
+                if (likes.empty()) {
+                    std::cout << "No hay películas en 'Like'.\n";
+                } else {
+                    for (const QString &title : likes) {
+                        std::cout << title.toStdString() << std::endl;
+                    }
                 }
-                foundMovies.clear();
-                break;
-            case 4:
-                qout << "\n--- Películas 'Ver más tarde' ---\n";
-                for (const QString &title : userPreferences.getWatchLater()) {
-                    qout << title << Qt::endl;
+                continue;
+            }
+            case 4: {
+                std::set<QString> watchLater = userPreferences->getWatchLater();
+                std::cout << "\n--- Películas 'Ver más tarde' ---\n";
+                if (watchLater.empty()) {
+                    std::cout << "No hay películas en 'Ver más tarde'.\n";
+                } else {
+                    for (const QString &title : watchLater) {
+                        std::cout << title.toStdString() << std::endl;
+                    }
                 }
-                foundMovies.clear();
-                break;
+                continue;
+            }
             case 5:
-                qout << "Saliendo del programa...\n";
+                std::cout << "Saliendo del programa...\n";
                 break;
             default:
-                qout << "Opción no válida. Inténtelo de nuevo.\n";
-                break;
+                std::cout << "Opción no válida. Inténtelo de nuevo.\n";
+                continue;
         }
 
-        if (!foundMovies.empty()) {
-            qout << "\n--- Películas encontradas ---\n";
+        if (foundMovies.empty()) {
+            std::cout << "\nNo se ha encontrado registros de la película, verifique si está escrita correctamente.\n";
+        } else {
+            std::cout << "\n--- Películas encontradas ---\n";
             for (size_t i = 0; i < foundMovies.size(); ++i) {
-                qout << i + 1 << ". " << foundMovies[i][1] << Qt::endl; // Mostrar título de la película
+                std::cout << i + 1 << ". " << foundMovies[i][1].toStdString() << std::endl;
             }
 
             int selection;
             do {
-                qout << "Seleccione una película por su número: " << Qt::flush;
-                qin >> selection;
+                std::cout << "Seleccione una película por su número: ";
+                std::cin >> selection;
             } while (selection < 1 || selection > static_cast<int>(foundMovies.size()));
 
-            qout << "Seleccionó la película: " << foundMovies[selection - 1][1] << Qt::endl;
+            const QStringList &selectedMovie = foundMovies[selection - 1];
+            std::cout << "\nSeleccionó la película:\n";
+            std::cout << "IMDB ID: " << selectedMovie[0].toStdString() << std::endl;
+            std::cout << "Title: " << selectedMovie[1].toStdString() << std::endl;
+            std::cout << "Plot Synopsis: " << selectedMovie[2].toStdString() << std::endl;
+            std::cout << "Tags: " << selectedMovie[3].toStdString() << std::endl;
+            std::cout << "Split: " << selectedMovie[4].toStdString() << std::endl;
+            std::cout << "Synopsis Source: " << selectedMovie[5].toStdString() << std::endl;
 
-            qout << "1. Like\n";
-            qout << "2. Ver más tarde\n";
-            qout << "Seleccione una opción: " << Qt::flush;
-            int subOption;
-            qin >> subOption;
+            int option;
+            std::cout << "1. Like\n";
+            std::cout << "2. Ver más tarde\n";
+            std::cout << "Seleccione una opción: ";
+            std::cin >> option;
 
-            switch (subOption) {
-                case 1:
-                    userPreferences.addLike(foundMovies[selection - 1][1]);
-                    break;
-                case 2:
-                    userPreferences.addWatchLater(foundMovies[selection - 1][1]);
-                    break;
-                default:
-                    qout << "Opción no válida.\n";
-                    break;
+            if (option == 1) {
+                userPreferences->addLike(selectedMovie[1]);
+                std::cout << "Película añadida a 'Like'.\n";
+            } else if (option == 2) {
+                userPreferences->addWatchLater(selectedMovie[1]);
+                std::cout << "Película añadida a 'Ver más tarde'.\n";
+            } else {
+                std::cout << "Opción no válida.\n";
             }
-
-            foundMovies.clear(); // Limpiar la lista después de procesarla
         }
 
     } while (opcion != 5);
