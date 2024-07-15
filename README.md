@@ -44,3 +44,11 @@ El proyecto está organizado de la siguiente manera:
 - Qt 5.x o superior
 - CMake 3.x o superior
 - Un compilador C++ compatible (como CLION, GCC o Clang)
+
+## USO
+* Al ejecutar la aplicación, se te pedirá que ingreses tu nombre de usuario. Después, se mostrará un menú con las siguientes opciones:
+- Buscar películas por letras: Permite buscar películas cuyo título contenga un conjunto de letras especificadas.
+- Buscar películas por tags: Permite buscar películas por tags (géneros).
+- Ver películas marcadas como "Me gusta": Muestra las películas que has marcado como "Me gusta".
+- Ver películas marcadas para "Ver más tarde": Muestra las películas que has marcado para ver más tarde.
+- Salir: Termina la aplicación.
