@@ -41,7 +41,7 @@ El proyecto está organizado de la siguiente manera:
 
 ### Requisitos
 
-- Qt 5.x o superior
+- Qt 6.x o superior
 - CMake 3.x o superior
 - Un compilador C++ compatible (como CLION, GCC o Clang)
 
