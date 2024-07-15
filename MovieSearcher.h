@@ -1,7 +1,6 @@
 #ifndef UNTITLED19_MOVIESEARCHER_H
 #define UNTITLED19_MOVIESEARCHER_H
 
-
 #include <QString>
 #include <QStringList>
 #include <vector>
@@ -11,8 +10,8 @@
 class MovieSearcher {
 public:
     MovieSearcher(const QString &filePath);
-    std::vector<QStringList> searchMovieByLetters(const QString &letters);
-    std::vector<QStringList> searchMovieByTags(const QString &tags);
+    std::vector<QStringList> searchMovieByLetters(const QString &letters, int startIndex = 0);
+    std::vector<QStringList> searchMovieByTags(const QString &tags, int startIndex = 0);
 
 private:
     QString filePath;
@@ -23,4 +22,4 @@ private:
     void readCSVFile();
 };
 
-#endif //UNTITLED19_MOVIESEARCHER_H
+#endif // UNTITLED19_MOVIESEARCHER_H
