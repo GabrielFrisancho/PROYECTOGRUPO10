@@ -12,6 +12,8 @@ public:
     MovieSearcher(const QString &filePath);
     std::vector<QStringList> searchMovieByLetters(const QString &letters, int startIndex = 0);
     std::vector<QStringList> searchMovieByTags(const QString &tags, int startIndex = 0);
+    QStringList getMovieDetails(const QString &title) const;
+    QString getFirstTag(const QString &title) const;
 
 private:
     QString filePath;
@@ -22,4 +24,4 @@ private:
     void readCSVFile();
 };
 
-#endif // UNTITLED19_MOVIESEARCHER_H
+#endif //UNTITLED19_MOVIESEARCHER_H
