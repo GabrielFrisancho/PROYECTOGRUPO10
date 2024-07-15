@@ -141,4 +141,5 @@ El proyecto utiliza varios patrones de diseño de software para mejorar la estru
 #### Ejemplo de Algoritmo de Complejidad Mayor a Lineal
 En la clase `MovieSearcher`, se utiliza un algoritmo de búsqueda binaria para encontrar películas, cuya complejidad es **O(log n)**, mayor a la complejidad lineal.
 
-
+### QT (F.zip)
+Archivos .qml.ui
