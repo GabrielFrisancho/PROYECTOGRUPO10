@@ -171,3 +171,7 @@ En la clase `MovieSearcher`, se utiliza un algoritmo de búsqueda binaria para e
 ### QT (F.zip)
 Archivos .qml.ui incluyen los codigos utilizados para hacer la interfaz grafica del programa, hechos en qt studio design y qt creator. En el utilizaremos qml que es qt meta language el cual nos ayudara mucho a la hora de manejar objetos.
 Para ingresar a los archivos qml.ui desde el zip F.zip >> Proyect3_DS >> Proyect3_DSContent. Alli encontrara hasta 10 archivos qml.ui los cuales hemos trabajado y decorado para hacer una interfaz amigable y bastante sencilla, la cual se basa principalmente de botones para la conexion de stages.
+
+### PARTICIPACIÓN DEL GRUPO
+Todo el grupo estuvo presente en todas las reuniones asignadas para avanzar el proyecto . Los commits realizados en este proyecto han sido versiones de todos en conjunto. 
+Resumen : La participación para este trabajo ha sido equitativa. 
