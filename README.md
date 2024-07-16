@@ -6,7 +6,7 @@
 
 -Mikael Quinto Ramos
 
--Adrian Urbina Mendoza
+-Adrian Urbina Mendoza- 202310148
 
 -Camila Espinoza Cabrera
 
