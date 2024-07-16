@@ -8,7 +8,7 @@
 
 -Adrian Urbina Mendoza- 202310148
 
--Camila Espinoza Cabrera
+-Camila Espinoza Cabrera- 202220389
 
 -Gabriel Frisancho Gálvez
 
