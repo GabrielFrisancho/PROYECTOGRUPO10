@@ -4,7 +4,7 @@
 
 ## Integrantes
 
--Mikael Quinto Ramos
+-Mikael Quinto Ramos- 202210267
 
 -Adrian Urbina Mendoza- 202310148
 
